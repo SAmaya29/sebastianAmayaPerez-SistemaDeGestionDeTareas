@@ -7,7 +7,7 @@ import { authConfig } from "../auth.config"; // 1. Importamos la configuración 
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig, // 2. Aquí arrastramos de golpe session, pages, etc.
-  
+  secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET, // <-- AÑADE ESTA LÍNEA AQUÍ
   // 3. Añadimos los callbacks de roles que tenías originalmente
   callbacks: {
     async jwt({ token, user }) {
@@ -27,7 +27,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session;
     },
   },
-  
+
   // 4. Llenamos los proveedores con tu lógica de Supabase
   providers: [
     Credentials({
@@ -37,20 +37,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
-        
+
         const user = await prisma.user.findUnique({
           where: { email: credentials.email as string },
         });
-        
+
         if (!user) return null;
-        
+
         const passwordMatch = bcrypt.compareSync(
           credentials.password as string,
           user.password
         );
-        
+
         if (!passwordMatch) return null;
-        
+
         return {
           id: user.id,
           name: user.name,
