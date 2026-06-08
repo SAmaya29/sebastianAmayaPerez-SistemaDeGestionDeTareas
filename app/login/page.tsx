@@ -18,25 +18,23 @@ export default function LoginPage() {
         setError("");
 
         try {
+            // En NextAuth v5, para que funcione bien en Vercel, cambiamos 'redirect: false'
+            // por 'redirectTo', dejando que la librería controle el redireccionamiento seguro.
             const result = await signIn("credentials", {
                 email,
                 password,
-                redirect: false,
+                redirectTo: "/dashboard", // <- Le indicamos a dónde ir directamente
             });
 
-            if (result?.error) {
-                setError("Correo o contraseña incorrectos");
-                setLoading(false);
-            } else {
-                router.push("/dashboard");
-                router.refresh();
-            }
-        } catch {
-            setError("Ocurrió un error inesperado.");
+            // Nota: Al usar redirección nativa, si los datos son correctos, 
+            // NextAuth romperá el flujo aquí y moverá al usuario al /dashboard.
+
+        } catch (err) {
+            // Si entra al catch o el login falla, atrapamos el error para mostrarlo en pantalla
+            setError("Correo o contraseña incorrectos");
             setLoading(false);
         }
     }
-
     return (
         <main className="min-h-screen bg-[#0a0f1e] flex items-center justify-center px-4 relative overflow-hidden">
             {/* Fondo decorativo */}
