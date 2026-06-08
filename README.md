@@ -13,7 +13,7 @@ Aplicación web fullstack para gestionar proyectos y tareas, con autenticación 
 
 ## Integrantes del equipo
 
-- (Agrega aquí los nombres de tu equipo)
+- Sebastian Amaya Perez
 
 ## Credenciales de acceso
 
