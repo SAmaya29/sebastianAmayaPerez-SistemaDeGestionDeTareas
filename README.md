@@ -13,7 +13,7 @@ Aplicación web fullstack para gestionar proyectos y tareas, con autenticación 
 
 ## Integrantes del equipo
 
-- (Agrega aquí los nombres de tu equipo)
+- Sebastian Amaya Perez
 
 ## Credenciales de acceso
 
@@ -53,3 +53,8 @@ Aplicación web fullstack para gestionar proyectos y tareas, con autenticación 
 - **Proyectos (Maestros):** visualización y creación de proyectos (solo ADMIN puede crear)
 - **Transacciones:** gestión de tareas por proyecto con gráfica de evolución
 - **Usuarios:** gestión de roles (solo ADMIN)
+
+## Despliegue
+
+La aplicación está desplegada en Vercel:  
+[https://nombreEquipoFuncionalidad.vercel.app](https://nombreEquipoFuncionalidad.vercel.app)
