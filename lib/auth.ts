@@ -5,7 +5,6 @@ import { prisma } from "@/lib/prisma";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: { strategy: "jwt" },
-  secret: process.env.NEXTAUTH_SECRET,
   pages: { signIn: "/login" },
   callbacks: {
     async jwt({ token, user }) {
@@ -33,15 +32,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
+        
         const user = await prisma.user.findUnique({
           where: { email: credentials.email as string },
         });
+        
         if (!user) return null;
+        
+        // Comparación síncrona infalible en entornos serverless
         const passwordMatch = bcrypt.compareSync(
           credentials.password as string,
           user.password
         );
+        
         if (!passwordMatch) return null;
+        
         return {
           id: user.id,
           name: user.name,
