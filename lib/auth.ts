@@ -11,15 +11,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   // 3. Añadimos los callbacks de roles que tenías originalmente
   callbacks: {
     async jwt({ token, user }) {
+      // El objeto 'user' solo está disponible en el momento exacto del login exitoso
       if (user) {
-        token.id = user.id;
-        token.role = (user as any).role;
-        token.image = (user as any).image;
+        const perfilUsuario = user as any;
+        token.id = perfilUsuario.id;
+        token.role = perfilUsuario.role || "USER"; // Fallback por seguridad si viene vacío
+        token.image = perfilUsuario.image || null;
       }
       return token;
     },
     async session({ session, token }) {
-      if (session.user) {
+      // Validamos que existan tanto la sesión como el token antes de transferir datos
+      if (session.user && token) {
         session.user.id = token.id as string;
         (session.user as any).role = token.role;
         session.user.image = token.image as string;
