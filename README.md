@@ -57,4 +57,4 @@ Aplicación web fullstack para gestionar proyectos y tareas, con autenticación 
 ## Despliegue
 
 La aplicación está desplegada en Vercel:  
-[https://nombreEquipoFuncionalidad.vercel.app](https://nombreEquipoFuncionalidad.vercel.app)
+[sebastian-amaya-perez-sistema-de-ge.vercel.app](sebastian-amaya-perez-sistema-de-ge.vercel.app)
